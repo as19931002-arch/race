@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.privacysandbox.tools.core.model.Type
 import androidx.window.layout.WindowMetricsCalculator
 import tw.edu.pu.csim.tcyang.race.ui.theme.RaceTheme
 
@@ -28,6 +29,8 @@ class MainActivity : ComponentActivity() {
         // 隱藏狀態列：獲取 WindowInsetsController，再隱藏statusBars
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
         windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
+        //隱藏下方巡覽頁
+       // windowInsetsController.hide(types=windowInsetsController.Type.StatusBars)
 
         // 確保內容延伸到至邊緣
         WindowCompat.setDecorFitsSystemWindows(
