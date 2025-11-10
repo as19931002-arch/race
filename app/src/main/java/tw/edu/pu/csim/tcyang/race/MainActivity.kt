@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.window.layout.WindowMetricsCalculator
 import tw.edu.pu.csim.tcyang.race.ui.theme.RaceTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,10 +28,28 @@ class MainActivity : ComponentActivity() {
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
         windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
 
+        // 確保內容延伸到至邊緣
+        WindowCompat.setDecorFitsSystemWindows(
+            window, false)
+
+        // 步驟 1: 獲取 WindowMetricsCalculator 實例
+        val windowMetricsCalculator =
+            WindowMetricsCalculator.getOrCreate()
+
+        // 步驟 2: 計算當前視窗的 WindowMetrics
+        val currentWindowMetrics=
+            windowMetricsCalculator.computeCurrentWindowMetrics(this)
+
+        // 步驟 3: 從 bounds 獲取像素尺寸
+        val bounds = currentWindowMetrics.bounds
+
+        val screenWidthPx = bounds.width().toFloat()
+        val screenHeightPx = bounds.height().toFloat()
 
         setContent {
             RaceTheme {
-                GameScreen(message = "橫式螢幕，隱藏狀態列")
+                GameScreen(message = "橫式螢幕，隱藏狀態列.螢幕寬度與高度:" +
+                           "$screenWidthPx * $screenHeightPx")
 
             }
         }
